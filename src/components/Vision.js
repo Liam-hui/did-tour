@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import * as PIXI from 'pixi.js'
 import { AdjustmentFilter, BloomFilter } from 'pixi-filters';
 
-const loader = new PIXI.Loader()
-
 const adjustmentFilter = new AdjustmentFilter();
 const blurFilter = new PIXI.filters.BlurFilter()
 const bloomFilter = new BloomFilter()
@@ -52,19 +50,18 @@ const macularFilter = new PIXI.Filter(
 
         uniform sampler2D uSampler;
 
-        const float INNER_RADIUS = 0.2;
-        const float OUTER_RADIUS = 0.45;
         const float MIX_RATE = 1.0;
 
         void main( void ) {
 
             vec2 center = vec2(iResolution.x * 0.5, iResolution.y * 0.5);
             float dist = distance(gl_FragCoord.xy, center);
-            float vig = smoothstep(80.0, 250.0, dist);
+            float width = min(iResolution.x, iResolution.y) * 0.5;
+            float black = smoothstep(0.0, width, dist);
             
             vec4 color = texture2D( uSampler, vTextureCoord );
 
-            gl_FragColor = vec4( mix(color, color * vig, MIX_RATE) );
+            gl_FragColor = vec4( mix(color, color * black, MIX_RATE) );
 
         }
     `, 
@@ -130,7 +127,7 @@ const pigmentosaFilter = new PIXI.Filter(
 );
 
 
-export default function Vision({ mode }) {
+export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
 
     const [width, setWidth] = useState(null)
     const [height, setHeight] = useState(null)
@@ -142,6 +139,8 @@ export default function Vision({ mode }) {
     const videoSpriteRef = useRef()
 
     const resize = () => {
+        setIsSmallScreen( Math.min(window.innerHeight, window.innerWidth) < 500 );
+
         if (videoRatioRef.current && videoSpriteRef.current) {
 
             const videoRatio = videoRatioRef.current
@@ -197,24 +196,30 @@ export default function Vision({ mode }) {
         visionRef.current.appendChild(app.view)
         app.resizeTo = visionRef.current
 
-        const videoUrl = 'http://demo.solutionforest.net/dark-test/LCK_D2_Route_v2_LBR.mp4';
-        loader.add(videoUrl).load(() => {
-            const video = loader.resources[videoUrl].data;
-            video.autoplay = true; 
+        loadVideo()
+
+    }, []); 
+
+    const loadVideo = () => {
+        const video = document.createElement('video')
+        video.src = process.env.PUBLIC_URL + '/video.mp4'
+    
+        video.onloadedmetadata = () => {
             video.loop = true;
+            video.autoplay = true; 
             video.muted = true;
             video.setAttribute("muted", true);
             video.setAttribute("playsinline", true);
-        
-            const videoTexture = PIXI.Texture.from(video);
-            videoSpriteRef.current = new PIXI.Sprite(videoTexture);
 
-            videoRatioRef.current = video.videoWidth / video.videoHeight;
-            resize();
-            app.stage.addChild(videoSpriteRef.current);
-        });
+            const videoTexture = PIXI.Texture.from(video)
+            videoSpriteRef.current = new PIXI.Sprite(videoTexture)
+            videoRatioRef.current = video.videoWidth / video.videoHeight
+            resize()
+            appRef.current.stage.addChild(videoSpriteRef.current)
 
-    }, []); 
+            video.play()
+        };
+    }
 
     useEffect(() => {
         if (width && height)
@@ -271,8 +276,8 @@ export default function Vision({ mode }) {
 
         const floaters = new PIXI.Container()
         const MIN_SIZE = 5
-        const MAX_SIZE = 60
-        const DIST = 150
+        const MAX_SIZE = isSmallScreen ? 30: 60
+        const DIST = isSmallScreen ? 60 : 150
 
         for (let x = 0; x < width; x += DIST) {
             for (let y = 0; y < height; y += DIST) {

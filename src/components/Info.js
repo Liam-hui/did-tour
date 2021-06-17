@@ -1,58 +1,46 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 
-const INFO_DATA = [
-    {
-        title: '黃斑點病變\nMacular Degeneration'
-    },
-    {
-        title: '青光眼\nGlaucoma'
-    },
-    {
-        title: '視網膜脫落\nRetina Detachment'
-    },
-    {
-        title: '白內障\nCataract'
-    },
-    {
-        title: '視網膜色素變性\nRetinitis Pigmentosa'
-    },
-]
-
-export default function Info({ mode }) {
-
-    const [isVisible, setIsVisible] = useState(false)
+export default function Info({ data, mode, isInfoVisible, setIsInfoVisible }) {
     
     useEffect(() => {
         if (mode != null)
-            setIsVisible(true)
+            setIsInfoVisible(true)
     }, [mode]); 
 
     const closeInfo = () => {
-        setIsVisible(false)
+        setIsInfoVisible(false)
     }
 
     return (
         <div 
             id="info" 
-            className={isVisible ? 'is-visible' : ''}
+            className={isInfoVisible ? 'is-visible' : ''}
         >
             {mode != null &&
                 <>
                     <div className='info-title'>
-                        {INFO_DATA[mode].title}     
+                        {data[mode].titleChi}
+                        <br/>   
+                        {data[mode].titleEng}  
                     </div>
 
-                    <p>
-                        字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字
-                    </p>
+                    {data[mode].infoChi &&
+                        <p>
+                            {data[mode].infoChi}
+                        </p>
+                    }
 
-                    <p>
-                        text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text 
-                    </p>
+                    {data[mode].infoEng &&
+                        <p>
+                            {data[mode].infoEng}
+                        </p>
+                    }
                 </>
             }
 
-            <div className='close-button' onMouseDown={closeInfo}>x</div>
+            <div className='close-button' onMouseDown={closeInfo}>
+                <img src={require(`../assets/icons/icon-close.svg`).default}/>
+            </div>
             
         </div>
     );

@@ -1,66 +1,47 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { isMobile } from 'react-device-detect';
 
-const RADIUS = 85
-const WIDTH = RADIUS
-const HEIGHT = RADIUS * 2
-const DURATION = 35
-const ITEM_RADIUS = 6
+export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScreen }) {
 
-const MENU_ITEM_DATA = [
-    {
-        title: '黃斑點病變\nMacular Degeneration'
-    },
-    {
-        title: '青光眼\nGlaucoma'
-    },
-    {
-        title: '視網膜脫落\nRetina Detachment'
-    },
-    {
-        title: '白內障\nCataract'
-    },
-    {
-        title: '視網膜色素變性\nRetinitis Pigmentosa'
-    },
-].map( (item, index) => {
-    const x = {
-        0: RADIUS,
-        1: RADIUS * Math.sin(Math.PI / 4),
-        2: 0
-    }[Math.abs(index - 2)]
-    const y = {
-        0: 0,
-        1: RADIUS - RADIUS * Math.cos(Math.PI / 4),
-        2: RADIUS,
-        3: RADIUS + RADIUS * Math.cos(Math.PI / 4),
-        4: RADIUS * 2,
-    }[index]
-    return { 
-        ... item,
-        pos: {
+    const RADIUS = isSmallScreen ? 60: 85
+    const WIDTH = RADIUS
+    const HEIGHT = RADIUS * 2
+    const DURATION = 35
+    const ITEM_RADIUS = isSmallScreen ? 4 : 6
+
+    const itemPos = data.map( (_, index) => {
+        const x = {
+            0: RADIUS,
+            1: RADIUS * Math.sin(Math.PI / 4),
+            2: 0
+        }[Math.abs(index - 2)]
+        const y = {
+            0: 0,
+            1: RADIUS - RADIUS * Math.cos(Math.PI / 4),
+            2: RADIUS,
+            3: RADIUS + RADIUS * Math.cos(Math.PI / 4),
+            4: RADIUS * 2,
+        }[index]
+        return { 
             x: x, 
             y: y,
         }
-    }
-})
-
-export default function Menu({ mode, setMode }) {
+    })
 
     const [isVisible, setIsVisible] = useState(false)
+    const [isHover, setIsHover] = useState(false)
 
     const canvasRef = useRef()
     const animationIdRef = useRef()
 
     useEffect(() => {
-
         canvasRef.current.width = WIDTH
         canvasRef.current.height = HEIGHT
         const ctx = canvasRef.current.getContext('2d')
         ctx.imageSmoothingQuality = "high"
         ctx.lineWidth = 1
         ctx.strokeStyle = '#fff'
-
-    }, []); 
+    }, [isSmallScreen]); 
 
     const drawProgress = useRef(0)
     const drawArc = (isStart) => {
@@ -74,7 +55,7 @@ export default function Menu({ mode, setMode }) {
         ctx.stroke()
 
         ctx.globalCompositeOperation = "destination-out";
-        for (const pos of MENU_ITEM_DATA.map(x => x.pos)) {
+        for (const pos of itemPos) {
             ctx.beginPath();
             ctx.arc(pos.x, pos.y, ITEM_RADIUS + 1, 0, 2 * Math.PI);
             ctx.fill();
@@ -99,6 +80,32 @@ export default function Menu({ mode, setMode }) {
 
     const closeMenu = () => {
         setIsVisible(false)
+        if (isMobile) setIsHover(false)
+    }
+
+    const toggleMenu = () => {
+        setIsVisible(!isVisible)
+        setIsHover(!isHover)
+    }
+
+    const hoverOn = () => {
+        setIsHover(true)
+    }
+
+    const hoverOff = () => {
+        setIsHover(false)
+    }
+
+    const openInfo = (index) => {
+        setMode(index)
+        if (isMobile) {
+            setIsHover(false)
+            setIsVisible(false)
+        }
+    }
+
+    const showInfo = () => {
+        setIsInfoVisible(true)
     }
 
     return (
@@ -106,12 +113,21 @@ export default function Menu({ mode, setMode }) {
             id="menu" 
             className={isVisible ? 'is-visible' : ''}
             style={{ width: WIDTH, height: HEIGHT }}
-            onMouseEnter={openMenu} onMouseLeave={closeMenu}
+            onMouseEnter={isMobile ? null : openMenu} 
+            onMouseLeave={closeMenu}
         >
-            <div id="menu-button"/>
+            <div 
+                id="menu-button" 
+                className={isHover ? 'is-hover' : ''}
+                onMouseDown={isMobile ? toggleMenu : null}
+                onMouseEnter={isMobile ? null : hoverOn}
+                onMouseLeave={isMobile ? null : hoverOff}
+            >
+                <img src={require(`../assets/icons/icon-eye.svg`).default}/>
+            </div>
             <div className="menu-items-container">
                 <canvas ref={canvasRef}/>
-                {MENU_ITEM_DATA.map( (item, index) =>
+                {data.map( (item, index) =>
                     <div 
                         key={index}
                         className={`menu-item ${mode == index ? 'is-selected' : ''}`}
@@ -119,10 +135,10 @@ export default function Menu({ mode, setMode }) {
                             width: ITEM_RADIUS * 2,
                             height: ITEM_RADIUS * 2,
                             borderRadius: ITEM_RADIUS,
-                            transform: `translate(${item.pos.x - ITEM_RADIUS}px, ${item.pos.y - ITEM_RADIUS}px)`,
+                            transform: `translate(${itemPos[index].x - ITEM_RADIUS}px, ${itemPos[index].y - ITEM_RADIUS}px)`,
                             transition: `opacity 0.2s ease-in-out ${ (isVisible ? index : (4 - index) ) * DURATION / 4 * 0.01}s`
                         }}
-                        onClick={() => setMode(index)}
+                        onMouseDown={() => openInfo(index)}
                     >
                         <div 
                             className="menu-fill"
@@ -150,7 +166,9 @@ export default function Menu({ mode, setMode }) {
                                 }
                             }
                         >
-                            {item.title}
+                            {item.titleChi} <img onClick={showInfo} src={require(`../assets/icons/icon-info.svg`).default}/>
+                            <br/>
+                            {item.titleEng}
                         </div>
                     </div>
                 )}

@@ -1,0 +1,32 @@
+[
+    {
+        "titleChi": "黃斑點病變",
+        "titleEng": "Macular Degeneration",
+        "infoChi": "視網膜上最多感光細胞的區域，是中央視力的所在。\n變形，直線會變成曲線，或是一條直線中段忽然中斷，或中間有黑點。",
+        "infoEng": "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+    },
+    {
+        "titleChi": "青光眼",
+        "titleEng": "Glaucoma",
+        "infoChi": "眼球壓力過高\n視神經細胞受損\n令視力下降和視野縮窄\n慢性青光眼可能沒有什麼病徵，病者只會覺得視力減退或視野收窄",
+        "infoEng": "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+    },
+    {
+        "titleChi": "視網膜脫落",
+        "titleEng": "Retina Detachment",
+        "infoChi": "視網膜是眼球壁最裡面的一層組織\n最先受影響者是旁邊視網膜，然後逐漸蔓延至中心的黃斑點\n嚴重者可致失明",
+        "infoEng": "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+    },
+    {
+        "titleChi": "白內障",
+        "titleEng": "Cataract",
+        "infoChi": "白內障是常見會導致失明的眼疾\n水晶體出現混濁\n視力模糊、有黑影、感覺眼前有薄膜",
+        "infoEng": "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+    },
+    {
+        "titleChi": "視網膜色素變性",
+        "titleEng": "Retinitis Pigmentosa",
+        "infoChi": "使視網膜受損的遺傳性病變\n引致感光細胞逐步退化，令患者逐漸喪失視覺",
+        "infoEng": "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text "
+    }
+]
