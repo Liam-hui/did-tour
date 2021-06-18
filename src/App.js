@@ -8,10 +8,13 @@ import '@/styles/styles.css';
 
 function App() {
 
-  const [mode, setMode] = useState(null);
+  const [mode, setMode] = useState(null)
+  const [fontSize, setFontSize] = useState(1)
   const [data, setData] = useState([])
-  const [isInfoVisible, setIsInfoVisible] = useState(false);
-  const [isSmallScreen, setIsSmallScreen] = useState( Math.min(window.innerHeight, window.innerWidth) < 500 );
+  const [isInfoVisible, setIsInfoVisible] = useState(false)
+
+  const root = document.getElementById('vision-player')
+  const [isSmallScreen, setIsSmallScreen] = useState( Math.min(root.offsetHeight, root.offsetWidth) < 500 )
 
   useEffect(() => {
     fetch(process.env.PUBLIC_URL + "/data.json")
@@ -19,12 +22,34 @@ function App() {
     .then(data => setData(data));
   }, []);
 
+  const FontSizeSetting = () => {
+    return (
+      <div className="vision-player-set-font-container">
+        <img onClick={() => setFontSize(1)} style={{ height: 36, width: 'auto'}} src={require(`@/assets/icons/icon-font-${fontSize == 1 ? 'white' : 'black'}.svg`).default}/>
+        <img onClick={() => setFontSize(2)} style={{ height: 48, width: 'auto'}} src={require(`@/assets/icons/icon-font-${fontSize == 2 ? 'white' : 'black'}.svg`).default}/>
+        <img onClick={() => setFontSize(3)} style={{ height: 60, width: 'auto'}} src={require(`@/assets/icons/icon-font-${fontSize == 3 ? 'white' : 'black'}.svg`).default}/>
+      </div>
+    )
+  }
+
+  const fontSizeValue = {
+    1: 16,
+    2: 19,
+    3: 22,
+  }[fontSize]
+
   return (
-    <>
+    <div 
+      className={`vision-player-container ${isSmallScreen ? 'is-small' : ''}`}
+      style={{
+        "--text-size": `${(isSmallScreen? 0.75 : 1) * fontSizeValue}px`
+      }}
+    >
       <Vision mode={mode} isSmallScreen={isSmallScreen} setIsSmallScreen={setIsSmallScreen}/>
       <Menu data={data} mode={mode} setMode={setMode} setIsInfoVisible={setIsInfoVisible} isSmallScreen={isSmallScreen}/>
       <Info data={data} mode={mode} isInfoVisible={isInfoVisible} setIsInfoVisible={setIsInfoVisible}/>
-    </>
+      <FontSizeSetting/>
+    </div>
   )
 }
 

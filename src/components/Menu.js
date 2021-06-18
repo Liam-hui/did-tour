@@ -40,7 +40,7 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
         const ctx = canvasRef.current.getContext('2d')
         ctx.imageSmoothingQuality = "high"
         ctx.lineWidth = 1
-        ctx.strokeStyle = '#fff'
+        ctx.strokeStyle = '#E5E5E5'
     }, [isSmallScreen]); 
 
     const drawProgress = useRef(0)
@@ -110,46 +110,52 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
 
     return (
         <div 
-            id="menu" 
-            className={isVisible ? 'is-visible' : ''}
+            className={`vision-player-menu ${isVisible ? 'is-visible' : ''}`}
             style={{ width: WIDTH, height: HEIGHT }}
             onMouseEnter={isMobile ? null : openMenu} 
             onMouseLeave={closeMenu}
         >
             <div 
-                id="menu-button" 
-                className={isHover ? 'is-hover' : ''}
+                className={`vision-player-menu-button ${isHover ? 'is-hover' : ''}`}
                 onMouseDown={isMobile ? toggleMenu : null}
                 onMouseEnter={isMobile ? null : hoverOn}
                 onMouseLeave={isMobile ? null : hoverOff}
             >
                 <img src={require(`../assets/icons/icon-eye.svg`).default}/>
             </div>
-            <div className="menu-items-container">
+            <div className="vision-player-menu-items-container">
                 <canvas ref={canvasRef}/>
                 {data.map( (item, index) =>
                     <div 
                         key={index}
-                        className={`menu-item ${mode == index ? 'is-selected' : ''}`}
+                        className={`vision-player-menu-item ${mode == index ? 'is-selected' : ''}`}
                         style={{
                             width: ITEM_RADIUS * 2,
                             height: ITEM_RADIUS * 2,
-                            borderRadius: ITEM_RADIUS,
                             transform: `translate(${itemPos[index].x - ITEM_RADIUS}px, ${itemPos[index].y - ITEM_RADIUS}px)`,
                             transition: `opacity 0.2s ease-in-out ${ (isVisible ? index : (4 - index) ) * DURATION / 4 * 0.01}s`
                         }}
                         onMouseDown={() => openInfo(index)}
                     >
                         <div 
-                            className="menu-fill"
+                            className="vision-player-menu-fill"
                             style={{
-                                width: ITEM_RADIUS * 2 * 0.8,
-                                height: ITEM_RADIUS * 2 * 0.8,
-                                borderRadius: ITEM_RADIUS * 0.8,
+                                width: ITEM_RADIUS * 2 + (mode == index ? ITEM_RADIUS : 0), 
+                                height: ITEM_RADIUS * 2 + (mode == index ? ITEM_RADIUS : 0),
+                                borderRadius: ITEM_RADIUS + (mode == index ? ITEM_RADIUS * 0.5 : 0),
                             }}
-                        />
+                        >
+                            <div
+                                style={{
+                                    width: ITEM_RADIUS * 3 - 2, 
+                                    height: ITEM_RADIUS * 3 - 2,
+                                    borderRadius: ITEM_RADIUS * 1.5 - 1,
+                                }}
+                            />
+                        </div>
+
                         <div 
-                            className="menu-title"
+                            className="vision-player-menu-title"
                             style={ 
                                 {
                                     0: {

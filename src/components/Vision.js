@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import * as PIXI from 'pixi.js'
 import { AdjustmentFilter, BloomFilter } from 'pixi-filters';
+import { ResizeObserver } from '@juggle/resize-observer';
 
 const adjustmentFilter = new AdjustmentFilter();
 const blurFilter = new PIXI.filters.BlurFilter()
@@ -132,22 +133,23 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
     const [width, setWidth] = useState(null)
     const [height, setHeight] = useState(null)
 
-    const sizeRef = useRef()
+    const rootRef = useRef()
     const visionRef = useRef()
+    const sizeRef = useRef()
     const appRef = useRef()
     const videoRatioRef = useRef()
     const videoSpriteRef = useRef()
 
     const resize = () => {
-        setIsSmallScreen( Math.min(window.innerHeight, window.innerWidth) < 500 );
+        setIsSmallScreen( Math.min(rootRef.current.offsetHeight, rootRef.current.offsetWidth) < 500 );
 
         if (videoRatioRef.current && videoSpriteRef.current) {
 
             const videoRatio = videoRatioRef.current
             const videoSprite = videoSpriteRef.current
 
-            if (videoRatio > window.innerWidth / window.innerHeight ) {
-              const width = window.innerWidth
+            if (videoRatio > rootRef.current.offsetWidth / rootRef.current.offsetHeight ) {
+              const width = rootRef.current.offsetWidth
               const height = width / videoRatio;
               visionRef.current.style.width = width + 'px'
               visionRef.current.style.height = height + 'px'
@@ -155,7 +157,7 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
               videoSprite.height = height
             }
             else {
-              const height = window.innerHeight
+              const height = rootRef.current.offsetHeight
               const width = height * videoRatio
               visionRef.current.style.width = width + 'px'
               visionRef.current.style.height = height + 'px'
@@ -169,8 +171,6 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
             setSizeLoopRef.current = setTimeout(doneResizing, 500)
         }
     }
-
-    window.onresize = resize;
     const setSizeLoopRef = useRef();
     const doneResizing = () => {
         setWidth(visionRef.current.offsetWidth)
@@ -183,6 +183,14 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
 
     useEffect(() => {
 
+        // resize
+        rootRef.current = document.getElementById('vision-player')
+        const resizeObserver = new ResizeObserver((entries) => {
+            resize();
+        });
+        resizeObserver.observe(rootRef.current);
+
+        // pixi init
         const app = new PIXI.Application({        
             antialias: true,    
             transparent: false,
@@ -192,7 +200,6 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
         app.renderer.view.style.display = "block"
         app.renderer.autoResize = true
         appRef.current = app
-
         visionRef.current.appendChild(app.view)
         app.resizeTo = visionRef.current
 
@@ -318,8 +325,7 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
     )
 
     return (
-        <div id="vision" ref={visionRef}>
-        </div>
+        <div id="vision" ref={visionRef}/>
     );
 }
 

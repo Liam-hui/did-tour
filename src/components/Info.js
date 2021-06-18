@@ -13,12 +13,11 @@ export default function Info({ data, mode, isInfoVisible, setIsInfoVisible }) {
 
     return (
         <div 
-            id="info" 
-            className={isInfoVisible ? 'is-visible' : ''}
+            className={`vision-player-info ${isInfoVisible ? 'is-visible' : ''}`}
         >
             {mode != null &&
-                <>
-                    <div className='info-title'>
+                <div className='vision-player-info-scroll'>
+                    <div className='vision-player-info-title'>
                         {data[mode].titleChi}
                         <br/>   
                         {data[mode].titleEng}  
@@ -35,10 +34,11 @@ export default function Info({ data, mode, isInfoVisible, setIsInfoVisible }) {
                             {data[mode].infoEng}
                         </p>
                     }
-                </>
+
+                </div>
             }
 
-            <div className='close-button' onMouseDown={closeInfo}>
+            <div className='vision-player-info-close-button' onMouseDown={closeInfo}>
                 <img src={require(`../assets/icons/icon-close.svg`).default}/>
             </div>
             
