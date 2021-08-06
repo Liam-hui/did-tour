@@ -84,6 +84,7 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
     }
 
     const toggleMenu = () => {
+        reset()
         setIsVisible(!isVisible)
         setIsHover(!isHover)
     }
@@ -108,6 +109,10 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
         setIsInfoVisible(true)
     }
 
+    const reset = () => {
+        setMode(null)
+    }
+
     return (
         <div 
             className={`vision-player-menu ${isVisible ? 'is-visible' : ''}`}
@@ -117,7 +122,7 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
         >
             <div 
                 className={`vision-player-menu-button ${isHover ? 'is-hover' : ''}`}
-                onMouseDown={isMobile ? toggleMenu : null}
+                onMouseDown={isMobile ? toggleMenu : reset}
                 onMouseEnter={isMobile ? null : hoverOn}
                 onMouseLeave={isMobile ? null : hoverOff}
             >

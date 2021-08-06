@@ -238,12 +238,12 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
                     adjustmentFilter.gamma = 1
                     macularFilter.uniforms.iResolution = [parseInt(width), parseInt(height)]
                     videoSpriteRef.current.filters = [macularFilter, adjustmentFilter]
-                break;
+                break
                 case 1:
                     bloomFilter.blur = 5
                     glaucomaFilter.uniforms.iResolution = [parseInt(width), parseInt(height)]
                     videoSpriteRef.current.filters = [glaucomaFilter, bloomFilter]
-                break;
+                break
                 case 2:
                     blurFilter.strength = 0.2
                     videoSpriteRef.current.filters = [blurFilter]
@@ -262,7 +262,10 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
                 case 4:
                     pigmentosaFilter.uniforms.iResolution = [parseInt(width), parseInt(height)]
                     videoSpriteRef.current.filters = [pigmentosaFilter]
-                break;
+                break
+                case null:
+                    videoSpriteRef.current.filters = []
+                break
             }
 
             if (mode != 2) {
