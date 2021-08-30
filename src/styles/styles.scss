@@ -1,3 +1,10 @@
+button {
+  background-color: unset;
+  border: none;
+  margin: unset;
+  padding: unset;
+}
+
 #vision-player {
   margin: 0;
   overflow: hidden;
@@ -48,7 +55,7 @@
         height: 50%;
         width: auto; 
       }
-      &.is-hover {
+      &:hover {
         opacity: 1;
         transform: translateX(-50%) translateY(-50%) scale(1.15);
       }
@@ -140,8 +147,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(150%);
-    right: 2em;
-    width: 300px;
+    right: 3%;
+    width: 320px;
     max-width: 40%;
     height: 80%;
     background-color: rgba(0, 0, 0, 0.6);
@@ -194,7 +201,13 @@
     position: absolute;
     bottom: 1.5em;
     left: 3em;
+    display: flex;
+    align-items: baseline;
     img {
+      cursor: pointer;
+      margin-right: 7px;
+    }
+    div {
       cursor: pointer;
       margin-right: 7px;
     }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { isMobile } from 'react-device-detect';
 
-export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScreen }) {
+export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo }) {
 
     const RADIUS = isSmallScreen ? 60: 85
     const WIDTH = RADIUS
@@ -29,7 +28,7 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
     })
 
     const [isVisible, setIsVisible] = useState(false)
-    const [isHover, setIsHover] = useState(false)
+    const [isHidden, setIsHidden] = useState(true)
 
     const canvasRef = useRef()
     const animationIdRef = useRef()
@@ -69,46 +68,42 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
         }
     }
 
+    const timeoutRef = useRef(null)
     useEffect(() => {
-        if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current)
+        if (animationIdRef.current) 
+            cancelAnimationFrame(animationIdRef.current)
         drawArc(isVisible)
-    }, [isVisible]); 
-
-    const openMenu = () => {
-        setIsVisible(true)
-    }
-
-    const closeMenu = () => {
-        setIsVisible(false)
-        if (isMobile) setIsHover(false)
-    }
+    }, [isVisible])
 
     const toggleMenu = () => {
         reset()
-        setIsVisible(!isVisible)
-        setIsHover(!isHover)
+
+        if (isVisible) 
+            closeMenu()
+        else 
+            openMenu()
     }
 
-    const hoverOn = () => {
-        setIsHover(true)
+    const openMenu = () => {
+        if (timeoutRef.current) 
+            clearTimeout(timeoutRef.current)
+
+        setIsHidden(false)
+        timeoutRef.current = setTimeout(() => setIsVisible(true), 20)
     }
 
-    const hoverOff = () => {
-        setIsHover(false)
+    const closeMenu = () => {
+        if (timeoutRef.current) 
+            clearTimeout(timeoutRef.current)
+
+        setIsVisible(false)
+        timeoutRef.current = setTimeout(() => setIsHidden(true), 1500)
     }
 
     const openInfo = (index) => {
         setMode(index)
-        if (isMobile) {
-            setIsHover(false)
-            setIsVisible(false)
-        }
     }
-
-    const showInfo = () => {
-        setIsInfoVisible(true)
-    }
-
+    
     const reset = () => {
         setMode(null)
     }
@@ -117,23 +112,23 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
         <div 
             className={`vision-player-menu ${isVisible ? 'is-visible' : ''}`}
             style={{ width: WIDTH, height: HEIGHT }}
-            onMouseEnter={isMobile ? null : openMenu} 
+            onMouseEnter={openMenu}
             onMouseLeave={closeMenu}
         >
             <div 
-                className={`vision-player-menu-button ${isHover ? 'is-hover' : ''}`}
-                onMouseDown={isMobile ? toggleMenu : reset}
-                onMouseEnter={isMobile ? null : hoverOn}
-                onMouseLeave={isMobile ? null : hoverOff}
+                className='vision-player-menu-button'
+                onMouseDown={toggleMenu}
+                aria-lable="open menu"
             >
-                <img src={require(`../assets/icons/icon-eye.svg`).default}/>
+                <img alt="open menu" src={require(`../assets/icons/icon-eye.svg`).default}/>
             </div>
             <div className="vision-player-menu-items-container">
                 <canvas ref={canvasRef}/>
-                {data.map( (item, index) =>
+                {!isHidden && data.map( (item, index) =>
                     <div 
                         key={index}
                         className={`vision-player-menu-item ${mode == index ? 'is-selected' : ''}`}
+                        alt={item.titleEng}
                         style={{
                             width: ITEM_RADIUS * 2,
                             height: ITEM_RADIUS * 2,
@@ -161,6 +156,7 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
 
                         <div 
                             className="vision-player-menu-title"
+                            alt={`${item.titleChi}${item.titleEng}`}
                             style={ 
                                 {
                                     0: {
@@ -177,7 +173,8 @@ export default function Menu({ data, mode, setMode, setIsInfoVisible, isSmallScr
                                 }
                             }
                         >
-                            {item.titleChi} <img onClick={showInfo} src={require(`../assets/icons/icon-info.svg`).default}/>
+                            {item.titleChi} 
+                            <img alt={`open detail of ${item.titleEng}`} onClick={reopenInfo} src={require(`../assets/icons/icon-info.svg`).default}/>
                             <br/>
                             {item.titleEng}
                         </div>
