@@ -73,7 +73,7 @@ button {
   top: 0;
   left: 0;
   opacity: 0;
-  cursor: pointer;
+  cursor: pointer !important;
   pointer-events: none;
   overflow: visible;
 }
@@ -103,6 +103,8 @@ button {
   text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.5);
   padding: 10px 0;
   color: #C4C4C4;
+  text-align: left !important;
+  cursor: pointer !important;
 }
 #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-title img {
   height: 1em;

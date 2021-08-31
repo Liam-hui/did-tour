@@ -40,27 +40,27 @@ export default function Info({ data, mode, infoReopen }) {
         <div className={`vision-player-info ${isVisible ? 'is-visible' : ''}`}>
             {mode != null &&
                 <div className='vision-player-info-scroll'>
-                    <div className='vision-player-info-title'>
+                    <div className='vision-player-info-title' tabIndex={8}>
                         {data[mode].titleChi}
                         <br/>   
                         {data[mode].titleEng}  
                     </div>
 
                     {data[mode].infoChi &&
-                        <p>
+                        <p tabIndex={9}>
                             {data[mode].infoChi}
                         </p>
                     }
 
                     {data[mode].infoEng &&
-                        <p>
+                        <p tabIndex={10}>
                             {data[mode].infoEng}
                         </p>
                     }
                 </div>
             }
 
-            <button aria-label="close info" className='vision-player-info-close-button' onMouseDown={closeInfo}>
+            <button aria-label="close info" tabIndex={7} className='vision-player-info-close-button' onClick={closeInfo}>
                 <img alt="close info" src={require(`../assets/icons/icon-close.svg`).default}/>
             </button>
             

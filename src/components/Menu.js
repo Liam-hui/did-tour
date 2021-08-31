@@ -115,17 +115,18 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
             onMouseEnter={openMenu}
             onMouseLeave={closeMenu}
         >
-            <div 
+            <button  
+                tabIndex={1}
                 className='vision-player-menu-button'
-                onMouseDown={toggleMenu}
-                aria-lable="open menu"
+                onClick={toggleMenu}
+                aria-label="open menu"
             >
-                <img alt="open menu" src={require(`../assets/icons/icon-eye.svg`).default}/>
-            </div>
+                <img alt="menu icon" src={require(`../assets/icons/icon-eye.svg`).default}/>
+            </button>
             <div className="vision-player-menu-items-container">
                 <canvas ref={canvasRef}/>
                 {!isHidden && data.map( (item, index) =>
-                    <div 
+                    <div
                         key={index}
                         className={`vision-player-menu-item ${mode == index ? 'is-selected' : ''}`}
                         alt={item.titleEng}
@@ -135,7 +136,7 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
                             transform: `translate(${itemPos[index].x - ITEM_RADIUS}px, ${itemPos[index].y - ITEM_RADIUS}px)`,
                             transition: `opacity 0.2s ease-in-out ${ (isVisible ? index : (4 - index) ) * DURATION / 4 * 0.01}s`
                         }}
-                        onMouseDown={() => openInfo(index)}
+                        onClick={() => openInfo(index)}
                     >
                         <div 
                             className="vision-player-menu-fill"
@@ -154,9 +155,10 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
                             />
                         </div>
 
-                        <div 
+                        <button
                             className="vision-player-menu-title"
-                            alt={`${item.titleChi}${item.titleEng}`}
+                            tabIndex={2 + index}
+                            // onClick={() => openInfo(index)}
                             style={ 
                                 {
                                     0: {
@@ -174,10 +176,10 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
                             }
                         >
                             {item.titleChi} 
-                            <img alt={`open detail of ${item.titleEng}`} onClick={reopenInfo} src={require(`../assets/icons/icon-info.svg`).default}/>
+                            <img alt={`info icon`} onClick={reopenInfo} src={require(`../assets/icons/icon-info.svg`).default}/>
                             <br/>
                             {item.titleEng}
-                        </div>
+                        </button>
                     </div>
                 )}
             </div>
