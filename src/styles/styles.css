@@ -1,20 +1,20 @@
-button {
+#vision * {
+  box-sizing: border-box;
+}
+#vision video {
+  object-fit: cover;
+}
+#vision button {
   background-color: unset;
   border: none;
   margin: unset;
   padding: unset;
 }
-
-#vision-player {
+#vision #vision-player {
   margin: 0;
   overflow: hidden;
   position: relative;
   font-family: sans-serif;
-  position: relative;
-}
-#vision-player .vision-player-container {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,17 +22,17 @@ button {
   background-color: black;
   font-size: 16px;
 }
-#vision-player .vision-player-container.is-small {
+#vision #vision-player.is-small {
   font-size: 12px;
 }
-#vision-player .vision-player-menu {
+#vision #vision-player .vision-player-menu {
   position: absolute;
   top: 50%;
   left: 5em;
   transform: translateY(-50%) scale(1);
   pointer-events: none;
 }
-#vision-player .vision-player-menu .vision-player-menu-button {
+#vision #vision-player .vision-player-menu .vision-player-menu-button {
   width: 3.8em;
   height: 3.8em;
   border-radius: 30px;
@@ -52,15 +52,15 @@ button {
   opacity: 0.7;
   z-index: 99;
 }
-#vision-player .vision-player-menu .vision-player-menu-button img {
+#vision #vision-player .vision-player-menu .vision-player-menu-button img {
   height: 50%;
   width: auto;
 }
-#vision-player .vision-player-menu .vision-player-menu-button:hover {
+#vision #vision-player .vision-player-menu .vision-player-menu-button:hover {
   opacity: 1;
   transform: translateX(-50%) translateY(-50%) scale(1.15);
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -68,7 +68,7 @@ button {
   left: 0;
   transition: all 0.8s ease-in-out;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item {
   position: absolute;
   top: 0;
   left: 0;
@@ -77,7 +77,7 @@ button {
   pointer-events: none;
   overflow: visible;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-fill {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-fill {
   position: absolute;
   border: 1px solid #E5E5E5;
   background-color: #ADB4B5;
@@ -85,7 +85,7 @@ button {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-fill div {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-fill div {
   opacity: 0;
   position: absolute;
   top: 50%;
@@ -93,7 +93,7 @@ button {
   transform: translateX(-50%) translateY(-50%);
   background-color: white;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-title {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-title {
   width: 10em;
   position: absolute;
   white-space: pre-wrap;
@@ -101,47 +101,47 @@ button {
   font-size: var(--text-size);
   line-height: 1.4;
   text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.5);
-  padding: 10px 0;
+  padding: 30px 0;
   color: #C4C4C4;
   text-align: left !important;
   cursor: pointer !important;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-title img {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item .vision-player-menu-title img {
   height: 1em;
   width: auto;
   opacity: 0.6;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item:hover {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item:hover {
   transform: scale(1.5);
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item:hover .vision-player-menu-title {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item:hover .vision-player-menu-title {
   color: white;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item:hover .vision-player-menu-title img {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item:hover .vision-player-menu-title img {
   opacity: 1;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item.is-selected .vision-player-menu-fill {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item.is-selected .vision-player-menu-fill {
   background-color: transparent;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item.is-selected .vision-player-menu-fill div {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container .vision-player-menu-item.is-selected .vision-player-menu-fill div {
   opacity: 1;
 }
-#vision-player .vision-player-menu .vision-player-menu-items-container canvas {
+#vision #vision-player .vision-player-menu .vision-player-menu-items-container canvas {
   pointer-events: none;
   width: 100%;
   height: 100%;
 }
-#vision-player .vision-player-menu.is-visible {
+#vision #vision-player .vision-player-menu.is-visible {
   pointer-events: auto;
 }
-#vision-player .vision-player-menu.is-visible .vision-player-menu-items-container {
+#vision #vision-player .vision-player-menu.is-visible .vision-player-menu-items-container {
   transform: scale(1) !important;
 }
-#vision-player .vision-player-menu.is-visible .vision-player-menu-items-container .vision-player-menu-item {
+#vision #vision-player .vision-player-menu.is-visible .vision-player-menu-items-container .vision-player-menu-item {
   opacity: 1;
   pointer-events: auto;
 }
-#vision-player .vision-player-info {
+#vision #vision-player .vision-player-info {
   position: absolute;
   top: 50%;
   transform: translateY(150%);
@@ -160,52 +160,62 @@ button {
   opacity: 0;
   transition: transform 0.8s ease-in-out, opacity 1.2s ease-in-out;
 }
-#vision-player .vision-player-info.is-visible {
+#vision #vision-player .vision-player-info.is-visible {
   pointer-events: unset;
   opacity: 1;
   transform: translateY(-50%);
 }
-#vision-player .vision-player-info .vision-player-info-scroll {
+#vision #vision-player .vision-player-info .vision-player-info-scroll {
   width: 100%;
   height: 100%;
   padding: 30px 20px;
   box-sizing: border-box;
   overflow-y: scroll;
 }
-#vision-player .vision-player-info .vision-player-info-scroll p {
-  white-space: pre-wrap;
-}
-#vision-player .vision-player-info .vision-player-info-scroll .vision-player-info-title {
+#vision #vision-player .vision-player-info .vision-player-info-scroll h2 {
+  margin: 0;
   font-size: 1.2em;
   text-align: center;
   white-space: pre-wrap;
 }
-#vision-player .vision-player-info .vision-player-info-close-button {
+#vision #vision-player .vision-player-info .vision-player-info-scroll p {
+  white-space: pre-wrap;
+}
+#vision #vision-player .vision-player-info .vision-player-info-close-button {
   position: absolute;
   top: 11px;
   right: 11px;
   cursor: pointer;
 }
-#vision-player .vision-player-info .vision-player-info-close-button img {
+#vision #vision-player .vision-player-info .vision-player-info-close-button img {
   height: 30px;
   width: auto;
 }
-#vision-player .vision-player-set-font-container {
+#vision #vision-player .vision-player-setting-container {
   position: absolute;
   bottom: 1.5em;
   left: 3em;
   display: flex;
   align-items: baseline;
 }
-#vision-player .vision-player-set-font-container img {
+#vision #vision-player .vision-player-setting-container img {
   cursor: pointer;
   margin-right: 7px;
 }
-#vision-player .vision-player-set-font-container div {
+#vision #vision-player .vision-player-setting-container div {
   cursor: pointer;
   margin-right: 7px;
 }
-#vision-player .vision-player-reset-button-container {
+#vision #vision-player .vision-player-play-button {
+  position: absolute;
+  bottom: 2.5em;
+  right: 3em;
+  opacity: 0.5;
+}
+#vision #vision-player .vision-player-play-button:hover {
+  opacity: 1;
+}
+#vision #vision-player .vision-player-reset-button-container {
   position: absolute;
   top: 2.2em;
   left: 3em;
@@ -216,16 +226,25 @@ button {
   cursor: pointer;
   text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.5);
 }
-#vision-player .vision-player-reset-button-container img {
+#vision #vision-player .vision-player-reset-button-container img {
   width: 2.8em;
   height: auto;
 }
-#vision-player .vision-player-reset-button-container div {
+#vision #vision-player .vision-player-reset-button-container div {
   font-size: 1em;
 }
-#vision-player ::-webkit-scrollbar {
+#vision #vision-player ::-webkit-scrollbar {
   width: 0;
   background: transparent;
+}
+#vision #vision-text {
+  border: 1px solid black;
+  padding: 15px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+#vision #vision-text p {
+  margin: 0;
 }
 
 /*# sourceMappingURL=styles.css.map */

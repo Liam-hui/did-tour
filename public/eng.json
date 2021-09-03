@@ -1,0 +1,45 @@
+{
+    "items": [
+        {
+            "title": "Macular Degeneration",
+            "videoLabel": "Macular Degeneration Simulation Video",
+            "info": "The macular is located in the central part of the retina. It is the area where most of the light-receptor nerve cells are found. Because of degeneration of the macula, inflammation, infection or trauma, the patient gradually loses central vision, with images turning wavy, fragmented lines distorted, or vision blurred."
+        },
+        {
+            "title": "Glaucoma",
+            "videoLabel": "Glaucoma Simulation Video",
+            "info": "Glaucoma arises from high intraocular pressure, which gradually damages the nerve fibers of the optic nerve. As a result, the patient gradually loses peripheral vision. Glaucoma can be divided into two types, acute and chronic. When the acute type flares up, there is pain. In the case of the chronic type, it is possible for the patient not to feel any discomfort in the eyes even up to the end stage. Not until all peripheral vision is gone may the patient be aware of something abnormal."
+        },
+        {
+            "title": "Retina Detachment",
+            "videoLabel": "Retina Detachment Simulation Video",
+            "info": "Retina is like the film inside a camera and is responsible for sensing the light and forming images. Retinal detachment refers to the separation between the neural inner layer and pigmented outer layer of the retina leading to the loss of proper function of the retina and even blindness."
+        },
+        {
+            "title": "Cataract",
+            "videoLabel": "Cataract Simulation Video",
+            "info": "The lens located inside the eyeball has the function of focusing images. A normal lens is totally transparent. Because of degeneration, the lens of a person suffering from cataract turns cloudy and hardened. Light rays are unable to penetrate into the lens completely, greatly lowering the patient’s perception of light and colours."
+        },
+        {
+            "title": "Retinitis Pigmentosa",
+            "videoLabel": "Retinitis Pigmentosa Simulation Video",
+            "info": "Retinitis Pigmentosa (RP) is one of the hereditary eye diseases. Following the degeneration of the light-receptor cells in the retina, and gradual narrowing of visual field."
+        }
+    ],
+    "text": "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
+    "labels": {
+        "defaultVideoLabel": "Normal Vision Simulation Video",
+        "menu": "menu",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu",
+        "setFontLarge": "Set font size to large",
+        "setFontMedium": "Set font size to medium",
+        "setFontSmall": "Set font size to small",
+        "playVideo": "play video",
+        "pauseVideo": "pause video",
+        "info": "infomation",
+        "closeInfo": "close infomation"
+    }
+}
+
+

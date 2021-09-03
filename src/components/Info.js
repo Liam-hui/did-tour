@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-export default function Info({ data, mode, infoReopen }) {
+export default function Info({ data, mode, labels, infoReopen }) {
     
     const [isVisible, setIsVisible] = useState(false)
     const [isHidden, setIsHidden] = useState(true)
@@ -40,28 +40,20 @@ export default function Info({ data, mode, infoReopen }) {
         <div className={`vision-player-info ${isVisible ? 'is-visible' : ''}`}>
             {mode != null &&
                 <div className='vision-player-info-scroll'>
-                    <div className='vision-player-info-title' tabIndex={8}>
-                        {data[mode].titleChi}
-                        <br/>   
-                        {data[mode].titleEng}  
-                    </div>
+                    <h2 tabIndex={4}>
+                        {data[mode].title}
+                    </h2>
 
-                    {data[mode].infoChi &&
-                        <p tabIndex={9}>
-                            {data[mode].infoChi}
-                        </p>
-                    }
-
-                    {data[mode].infoEng &&
-                        <p tabIndex={10}>
-                            {data[mode].infoEng}
+                    {data[mode].info &&
+                        <p tabIndex={4}>
+                            {data[mode].info}
                         </p>
                     }
                 </div>
             }
 
-            <button aria-label="close info" tabIndex={7} className='vision-player-info-close-button' onClick={closeInfo}>
-                <img alt="close info" src={require(`../assets/icons/icon-close.svg`).default}/>
+            <button aria-label={labels?.closeInfo ?? ''} tabIndex={4} className='vision-player-info-close-button' onClick={closeInfo}>
+                <img alt={labels?.closeInfo ?? ''} src={require(`../assets/icons/icon-close.svg`).default}/>
             </button>
             
         </div>

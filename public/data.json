@@ -1,32 +1,45 @@
-[
-    {
-        "titleChi": "黃斑點病變",
-        "titleEng": "Macular Degeneration",
-        "infoChi": "黃斑區位於視網膜中央，是感光神經細胞最集中的地方。由於黃斑區因病變、炎症、感染或創傷，令患者漸漸失去中央視力，影像會變成波浪型、出現斷裂、線條變形或影像變得模糊。",
-        "infoEng": "The macular is located in the central part of the retina. It is the area where most of the light-receptor nerve cells are found. Because of degeneration of the macula, inflammation, infection or trauma, the patient gradually loses central vision, with images turning wavy, fragmented lines distorted, or vision blurred."
-    },
-    {
-        "titleChi": "青光眼",
-        "titleEng": "Glaucoma",
-        "infoChi": "青光眼是眼壓過高引起的，導致眼後房視神經纖維逐漸毀壞，令患者損失周邊視力。青光眼可分為急性及慢性兩種。急性發作會引起痛楚，而慢性青光眼，患者可能直至末期眼睛都沒有感到不適，直至周邊視力完全喪失才發覺異常。",
-        "infoEng": "Glaucoma arises from high intraocular pressure, which gradually damages the nerve fibers of the optic nerve. As a result, the patient gradually loses peripheral vision. Glaucoma can be divided into two types, acute and chronic. When the acute type flares up, there is pain. In the case of the chronic type, it is possible for the patient not to feel any discomfort in the eyes even up to the end stage. Not until all peripheral vision is gone may the patient be aware of something abnormal."
-    },
-    {
-        "titleChi": "視網膜脫落",
-        "titleEng": "Retina Detachment",
-        "infoChi": "視網膜就好像攝影機的菲林一樣，負責感光和生成影像。視網膜脫落是指視網膜當中的神經上皮層和色素上皮層若出現分離。失去正常功能，嚴重者甚至失明。",
-        "infoEng": "Retina is like the film inside a camera and is responsible for sensing the light and forming images. Retinal detachment refers to the separation between the neural inner layer and pigmented outer layer of the retina leading to the loss of proper function of the retina and even blindness."
-    },
-    {
-        "titleChi": "白內障",
-        "titleEng": "Cataract",
-        "infoChi": "晶體位於眼球内部，有調節焦距之用。正常的晶體是完全透明的，白内障患者因退化其晶體會出現渾濁和硬化，光線無法完全穿透晶體，令患者對光度和色彩的敏感度大大減低。",
-        "infoEng": "The lens located inside the eyeball has the function of focusing images. A normal lens is totally transparent. Because of degeneration, the lens of a person suffering from cataract turns cloudy and hardened. Light rays are unable to penetrate into the lens completely, greatly lowering the patient’s perception of light and colours. "
-    },
-    {
-        "titleChi": "視網膜色素變性",
-        "titleEng": "Retinitis Pigmentosa",
-        "infoChi": "使視網膜受損的遺傳性病變\n引致感光細胞逐步退化，令患者逐漸喪失視覺",
-        "infoEng": "Retinitis Pigmentosa (RP) is one of the hereditary eye diseases. Following the degeneration of the light-receptor cells in the retina, and gradual narrowing of visual field. "
+{
+    "items": [
+        {
+            "title": "黃斑點病變",
+            "videoLabel": "黃斑點病變模擬片段",
+            "info": "黃斑區位於視網膜中央，是感光神經細胞最集中的地方。由於黃斑區因病變、炎症、感染或創傷，令患者漸漸失去中央視力，影像會變成波浪型、出現斷裂、線條變形或影像變得模糊。"
+        },
+        {
+            "title": "青光眼",
+            "videoLabel": "黃斑點病變模擬片段",
+            "info": "青光眼是眼壓過高引起的，導致眼後房視神經纖維逐漸毀壞，令患者損失周邊視力。青光眼可分為急性及慢性兩種。急性發作會引起痛楚，而慢性青光眼，患者可能直至末期眼睛都沒有感到不適，直至周邊視力完全喪失才發覺異常。"
+        },
+        {
+            "title": "視網膜脫落",
+            "videoLabel": "黃斑點病變模擬片段",
+            "info": "視網膜就好像攝影機的菲林一樣，負責感光和生成影像。視網膜脫落是指視網膜當中的神經上皮層和色素上皮層若出現分離。失去正常功能，嚴重者甚至失明。"
+        },
+        {
+            "title": "白內障",
+            "videoLabel": "黃斑點病變模擬片段",
+            "info": "晶體位於眼球内部，有調節焦距之用。正常的晶體是完全透明的，白内障患者因退化其晶體會出現渾濁和硬化，光線無法完全穿透晶體，令患者對光度和色彩的敏感度大大減低。"
+        },
+        {
+            "title": "視網膜色素變性",
+            "videoLabel": "黃斑點病變模擬片段",
+            "info": "使視網膜受損的遺傳性病變\n引致感光細胞逐步退化，令患者逐漸喪失視覺。"
+        }
+    ],
+    "text": "文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文文",
+    "labels": {
+        "defaultVideoLabel": "正常視力模擬片段",
+        "menu": "目錄",
+        "openMenu": "開啟目錄",
+        "closeMenu": "關閉目錄",
+        "setFontLarge": "設定字體大小為大",
+        "setFontMedium": "設定字體大小為中",
+        "setFontSmall": "設定字體大小為小",
+        "playVideo": "繼續播效",
+        "pauseVideo": "暫停播放",
+        "info": "資訊",
+        "closeInfo": "關閉資訊"
     }
-]
+}
+
+

@@ -128,15 +128,16 @@ const pigmentosaFilter = new PIXI.Filter(
 );
 
 
-export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
+export default function Vision({ mode, data, labels, isPaused, isSmallScreen, setIsSmallScreen }) {
 
     const [width, setWidth] = useState(null)
     const [height, setHeight] = useState(null)
 
     const rootRef = useRef()
-    const visionRef = useRef()
+    const canvasWrapperRef = useRef()
     const sizeRef = useRef()
     const appRef = useRef()
+    const videoRef = useRef()
     const videoRatioRef = useRef()
     const videoSpriteRef = useRef()
 
@@ -151,16 +152,16 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
             if (videoRatio > rootRef.current.offsetWidth / rootRef.current.offsetHeight ) {
               const width = rootRef.current.offsetWidth
               const height = width / videoRatio;
-              visionRef.current.style.width = width + 'px'
-              visionRef.current.style.height = height + 'px'
+              canvasWrapperRef.current.style.width = width + 'px'
+              canvasWrapperRef.current.style.height = height + 'px'
               videoSprite.width = width
               videoSprite.height = height
             }
             else {
               const height = rootRef.current.offsetHeight
               const width = height * videoRatio
-              visionRef.current.style.width = width + 'px'
-              visionRef.current.style.height = height + 'px'
+              canvasWrapperRef.current.style.width = width + 'px'
+              canvasWrapperRef.current.style.height = height + 'px'
               videoSprite.height = height
               videoSprite.width = width
             }
@@ -173,11 +174,11 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
     }
     const setSizeLoopRef = useRef();
     const doneResizing = () => {
-        setWidth(visionRef.current.offsetWidth)
-        setHeight(visionRef.current.offsetHeight)
+        setWidth(canvasWrapperRef.current.offsetWidth)
+        setHeight(canvasWrapperRef.current.offsetHeight)
         sizeRef.current = {
-            width: visionRef.current.offsetWidth,
-            height: visionRef.current.offsetHeight
+            width: canvasWrapperRef.current.offsetWidth,
+            height: canvasWrapperRef.current.offsetHeight
         }
     }
 
@@ -200,12 +201,14 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
         app.renderer.view.style.display = "block"
         app.renderer.autoResize = true
         appRef.current = app
-        visionRef.current.appendChild(app.view)
-        app.resizeTo = visionRef.current
+        app.view.setAttribute('tabIndex', 1)
+        app.view.setAttribute("role", "img")
+        canvasWrapperRef.current.appendChild(app.view)
+        app.resizeTo = canvasWrapperRef.current
 
         loadVideo()
 
-    }, []); 
+    }, [])
 
     const loadVideo = () => {
         const video = document.createElement('video')
@@ -225,7 +228,8 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
             appRef.current.stage.addChild(videoSpriteRef.current)
 
             video.play()
-        };
+            videoRef.current = video
+        }
     }
 
     useEffect(() => {
@@ -271,11 +275,22 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
             if (mode != 2) {
                 if (floatersRef.current) 
                     appRef.current.stage.removeChild(floatersRef.current)
-       
                 appRef.current.ticker.remove(animateFloaters.current)
             }
 
+            appRef.current.view.setAttribute('aria-label', 
+               mode == null ? labels?.defaultVideoLabel ?? '' : data[mode].videoText
+            )
+
     }, [width, height, mode]); 
+
+    useEffect(() => {
+        if (isPaused) {
+            videoRef.current.pause()
+        }
+        else if (videoRef.current)
+            videoRef.current.play()
+    }, [isPaused])
 
     // mode 2 Retina Detachment
     const floatersRef = useRef(null)
@@ -328,7 +343,7 @@ export default function Vision({ mode, isSmallScreen, setIsSmallScreen }) {
     )
 
     return (
-        <div id="vision" ref={visionRef}/>
-    );
+        <div class="vision-canvas-wrapper" ref={canvasWrapperRef}/>
+    )
 }
 

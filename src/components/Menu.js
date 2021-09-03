@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo }) {
+export default function Menu({ data, mode, labels, setMode, isSmallScreen, reopenInfo }) {
 
     const RADIUS = isSmallScreen ? 60: 85
     const WIDTH = RADIUS
@@ -116,12 +116,12 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
             onMouseLeave={closeMenu}
         >
             <button  
-                tabIndex={1}
+                tabIndex={2}
                 className='vision-player-menu-button'
                 onClick={toggleMenu}
-                aria-label="open menu"
+                aria-label={isVisible ? labels?.closeMenu ?? '' : labels?.openMenu ?? ''}
             >
-                <img alt="menu icon" src={require(`../assets/icons/icon-eye.svg`).default}/>
+                <img alt={labels?.menu ?? ''} src={require(`../assets/icons/icon-eye.svg`).default}/>
             </button>
             <div className="vision-player-menu-items-container">
                 <canvas ref={canvasRef}/>
@@ -129,14 +129,12 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
                     <div
                         key={index}
                         className={`vision-player-menu-item ${mode == index ? 'is-selected' : ''}`}
-                        alt={item.titleEng}
                         style={{
                             width: ITEM_RADIUS * 2,
                             height: ITEM_RADIUS * 2,
                             transform: `translate(${itemPos[index].x - ITEM_RADIUS}px, ${itemPos[index].y - ITEM_RADIUS}px)`,
                             transition: `opacity 0.2s ease-in-out ${ (isVisible ? index : (4 - index) ) * DURATION / 4 * 0.01}s`
                         }}
-                        onClick={() => openInfo(index)}
                     >
                         <div 
                             className="vision-player-menu-fill"
@@ -157,8 +155,8 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
 
                         <button
                             className="vision-player-menu-title"
-                            tabIndex={2 + index}
-                            // onClick={() => openInfo(index)}
+                            tabIndex={3}
+                            onClick={() => openInfo(index)}
                             style={ 
                                 {
                                     0: {
@@ -175,10 +173,8 @@ export default function Menu({ data, mode, setMode, isSmallScreen, reopenInfo })
                                 }
                             }
                         >
-                            {item.titleChi} 
-                            <img alt={`info icon`} onClick={reopenInfo} src={require(`../assets/icons/icon-info.svg`).default}/>
-                            <br/>
-                            {item.titleEng}
+                            {item.title} 
+                            <img aria-hidden="true" alt={labels?.info ?? ''} onClick={reopenInfo} src={require(`../assets/icons/icon-info.svg`).default}/>
                         </button>
                     </div>
                 )}
