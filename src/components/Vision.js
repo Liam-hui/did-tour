@@ -128,7 +128,7 @@ const pigmentosaFilter = new PIXI.Filter(
 );
 
 
-export default function Vision({ mode, data, labels, isPaused, isSmallScreen, setIsSmallScreen }) {
+export default function Vision({ mode, data, labels, isPaused, isSmallScreen, onResize }) {
 
     const [width, setWidth] = useState(null)
     const [height, setHeight] = useState(null)
@@ -138,39 +138,63 @@ export default function Vision({ mode, data, labels, isPaused, isSmallScreen, se
     const sizeRef = useRef()
     const appRef = useRef()
     const videoRef = useRef()
-    const videoRatioRef = useRef()
     const videoSpriteRef = useRef()
 
+    // const resize = () => {
+    //     onResize(rootRef.current.offsetWidth, rootRef.current.offsetHeight);
+
+    //     if (videoRatioRef.current && videoSpriteRef.current) {
+
+    //         const videoRatio = videoRatioRef.current
+    //         const videoSprite = videoSpriteRef.current
+
+    //         if (videoRatio > rootRef.current.offsetWidth / rootRef.current.offsetHeight ) {
+    //           const width = rootRef.current.offsetWidth
+    //           const height = width / videoRatio;
+    //           canvasWrapperRef.current.style.width = width + 'px'
+    //           canvasWrapperRef.current.style.height = height + 'px'
+    //           videoSprite.width = width
+    //           videoSprite.height = height
+    //         }
+    //         else {
+    //           const height = rootRef.current.offsetHeight
+    //           const width = height * videoRatio
+    //           canvasWrapperRef.current.style.width = width + 'px'
+    //           canvasWrapperRef.current.style.height = height + 'px'
+    //           videoSprite.height = height
+    //           videoSprite.width = width
+    //         }
+        
+    //         appRef.current.resize();
+
+    //         clearTimeout(setSizeLoopRef.current)
+    //         setSizeLoopRef.current = setTimeout(doneResizing, 500)
+    //     }
+    // }
     const resize = () => {
-        setIsSmallScreen( Math.min(rootRef.current.offsetHeight, rootRef.current.offsetWidth) < 500 );
+        onResize(rootRef.current.offsetWidth, rootRef.current.offsetHeight);
+        if (videoRef.current && videoSpriteRef.current) {
+            canvasWrapperRef.current.style.width = rootRef.current.offsetWidth + 'px'
+            canvasWrapperRef.current.style.height = rootRef.current.offsetHeight + 'px'
+            const videoRatio = videoRef.current.videoWidth / videoRef.current.videoHeight
 
-        if (videoRatioRef.current && videoSpriteRef.current) {
+            videoSpriteRef.current.position.x = rootRef.current.offsetWidth / 2
+            videoSpriteRef.current.position.y = rootRef.current.offsetHeight / 2
 
-            const videoRatio = videoRatioRef.current
-            const videoSprite = videoSpriteRef.current
-
-            if (videoRatio > rootRef.current.offsetWidth / rootRef.current.offsetHeight ) {
-              const width = rootRef.current.offsetWidth
-              const height = width / videoRatio;
-              canvasWrapperRef.current.style.width = width + 'px'
-              canvasWrapperRef.current.style.height = height + 'px'
-              videoSprite.width = width
-              videoSprite.height = height
+            if (videoRatio > rootRef.current.offsetWidth / rootRef.current.offsetHeight) {
+                const scale = rootRef.current.offsetHeight / videoRef.current.videoHeight
+                videoSpriteRef.current.scale.x = scale;
+                videoSpriteRef.current.scale.y = scale;
             }
             else {
-              const height = rootRef.current.offsetHeight
-              const width = height * videoRatio
-              canvasWrapperRef.current.style.width = width + 'px'
-              canvasWrapperRef.current.style.height = height + 'px'
-              videoSprite.height = height
-              videoSprite.width = width
+                const scale = rootRef.current.offsetWidth / videoRef.current.videoWidth
+                videoSpriteRef.current.scale.x = scale;
+                videoSpriteRef.current.scale.y = scale;
             }
-        
-            appRef.current.resize();
-
-            clearTimeout(setSizeLoopRef.current)
-            setSizeLoopRef.current = setTimeout(doneResizing, 500)
         }
+        appRef.current.resize();
+        clearTimeout(setSizeLoopRef.current)
+        setSizeLoopRef.current = setTimeout(doneResizing, 500)
     }
     const setSizeLoopRef = useRef();
     const doneResizing = () => {
@@ -183,7 +207,6 @@ export default function Vision({ mode, data, labels, isPaused, isSmallScreen, se
     }
 
     useEffect(() => {
-
         // resize
         rootRef.current = document.getElementById('vision-player')
         const resizeObserver = new ResizeObserver((entries) => {
@@ -207,7 +230,6 @@ export default function Vision({ mode, data, labels, isPaused, isSmallScreen, se
         app.resizeTo = canvasWrapperRef.current
 
         loadVideo()
-
     }, [])
 
     const loadVideo = () => {
@@ -223,12 +245,15 @@ export default function Vision({ mode, data, labels, isPaused, isSmallScreen, se
 
             const videoTexture = PIXI.Texture.from(video)
             videoSpriteRef.current = new PIXI.Sprite(videoTexture)
-            videoRatioRef.current = video.videoWidth / video.videoHeight
-            resize()
+            videoSpriteRef.current.width = video.videoWidth
+            videoSpriteRef.current.height = video.videoHeight
+            videoSpriteRef.current.anchor.set(0.5)
             appRef.current.stage.addChild(videoSpriteRef.current)
 
             video.play()
             videoRef.current = video
+
+            resize()
         }
     }
 
@@ -279,7 +304,7 @@ export default function Vision({ mode, data, labels, isPaused, isSmallScreen, se
             }
 
             appRef.current.view.setAttribute('aria-label', 
-               mode == null ? labels?.defaultVideoLabel ?? '' : data[mode].videoText
+               mode == null ? labels?.defaultVideoLabel ?? '' : data[mode].videoLabel
             )
 
     }, [width, height, mode]); 
@@ -343,7 +368,7 @@ export default function Vision({ mode, data, labels, isPaused, isSmallScreen, se
     )
 
     return (
-        <div class="vision-canvas-wrapper" ref={canvasWrapperRef}/>
+        <div className="vision-canvas-wrapper" ref={canvasWrapperRef}/>
     )
 }
 
